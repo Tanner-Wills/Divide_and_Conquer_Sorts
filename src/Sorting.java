@@ -114,7 +114,7 @@ public class Sorting {
      */
     public static void lsdRadixSort(int[] arr) {
         // each loop will sort the array by its least significant digit. then index one lsd.
-        // Step 1: determine the greatest magnitude of integers in the array
+        // Step 1: determine the greatest magnitude of integer in the array
         int magnitude = 0;
         for(int i = 0; i< arr.length; i++){
             String element = Integer.toString(arr[i]);
@@ -128,6 +128,9 @@ public class Sorting {
         for(int j = 0; j < magnitude; j++){
             for(int k = 0; k < arr.length; k++){
                 int digit = arr[k];
+                int lsd = lsdIndex(digit, j);
+
+
 
                 buckets.set(digit + 9, arr[k]);
             }
@@ -142,11 +145,15 @@ public class Sorting {
                 }
             }
         }
-
-
-
-
-
-
+    }
+    private static int lsdIndex(int num, int index){
+        // Helper method to pull out the lsd of the iteration loop for Radix sort
+        String lsdString = Integer.toString(num);
+        int lsdNum;
+        if(lsdString.length() >= (1+index))
+            lsdNum = Integer.parseInt(lsdString,lsdString.length()-(1+index));
+        else
+            lsdNum = 0;
+        return lsdNum;
     }
 }

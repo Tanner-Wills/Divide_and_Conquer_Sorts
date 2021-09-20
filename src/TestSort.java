@@ -7,9 +7,10 @@ public class TestSort {
         Comparator<Integer> comparator = new Comparator<Integer>() {
             int comparisons;
             int swaps;
+
             public int compare(Integer o1, Integer o2) {
-                comparisons ++;
-                if(o1-o2 > 0)
+                comparisons++;
+                if (o1 - o2 > 0)
                     swaps++;
                 System.out.println("Comparisons: " + comparisons);
                 System.out.println("Swaps: " + swaps);
@@ -18,10 +19,25 @@ public class TestSort {
         };
 
         //Integer[] testArray = {5,6,7,8,1,2,3,4};
-        Integer[] testArray = {4,3,1,5,2,6,7};
+        Integer[] testArray = {4, 3, 1, 5, 2, 6, 7};
 
 
-        Sorting.mergeSort(testArray, comparator);
-        System.out.println(Arrays.toString(testArray));
+        //Sorting.mergeSort(testArray, comparator);
+        //System.out.println(Arrays.toString(testArray));
+
+
+        int test = 657 ;
+        System.out.println(lsdIndex(test,1));
+
+    }
+    public static int lsdIndex(int num, int index){
+        // Helper method to pull out the lsd of the iteration loop for Radix sort
+        String lsdString = Integer.toString(num);
+        int lsdNum;
+        if(lsdString.length() >= (1+index))
+            lsdNum = Integer.parseInt(lsdString,lsdString.length()-(1+index));
+        else
+            lsdNum = 0;
+        return lsdNum;
     }
 }
