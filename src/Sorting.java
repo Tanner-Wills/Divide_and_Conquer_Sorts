@@ -39,16 +39,7 @@ public class Sorting {
      * @param comparator The Comparator used to compare the data in arr.
      */
     public static <T> void mergeSort(T[] arr, Comparator<T> comparator) {
-        /**
-         * if array.length reaches base case (length = 1)
-         *     return
-         * length = array.length
-         * middle = length / 2
-         * left = array[0...middle-1]
-         * right = array[middle...length-1]
-         * merge(left)
-         * merge(right)
-         */
+
         // Step 1: Partition array into halves
         if (arr.length == 1)
             return;
@@ -62,7 +53,7 @@ public class Sorting {
 
             T[] Right = (T[]) new Object[(length - middle)];
             for (int r = middle; r < length; r++)
-                Right[r] = arr[r];
+                Right[r-middle] = arr[r];
 
             mergeSort(Left, comparator);
             mergeSort(Right, comparator);
@@ -70,31 +61,26 @@ public class Sorting {
             // Step 2: merging two halves
             int i = 0;
             int j = 0;
-            while (i < Left.length - 1 && j < Right.length - 1) {
-                T temp = arr[i + j];
-                if(comparator.compare(Left[i], Right[j]) < 0) {
+            while (i < Left.length && j < Right.length) {
+
+                if (comparator.compare(Left[i], Right[j]) <= 0) {
                     arr[i + j] = Left[i];
-                    Left[i] = temp;
                     i++;
-                }
-                else {
+                } else {
                     arr[i + j] = Right[j];
-                    Right[j] = temp;
                     j++;
                 }
+            }
 
                 // Step 3: empty remaining subarray
                 while (i < Left.length) {
                     arr[i + j] = Left[i];
-                    Left[i] = temp;
                     i++;
                 }
                 while(j < Right.length){
                     arr[i + j] = Right[j];
-                    Right[j] = temp;
                     j++;
                 }
-            }
         }
     }
 
