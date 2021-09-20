@@ -1,8 +1,5 @@
 import java.lang.reflect.Array;
-import java.util.Comparator;
-import java.util.List;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Your implementation of various divide & conquer sorting algorithms.
@@ -116,6 +113,40 @@ public class Sorting {
      * @param arr The array to be sorted.
      */
     public static void lsdRadixSort(int[] arr) {
-        // WRITE YOUR CODE HERE (DO NOT MODIFY METHOD HEADER)!
+        // each loop will sort the array by its least significant digit. then index one lsd.
+        // Step 1: determine the greatest magnitude of integers in the array
+        int magnitude = 0;
+        for(int i = 0; i< arr.length; i++){
+            String element = Integer.toString(arr[i]);
+            if(element.length() > magnitude)
+                magnitude = element.length();
+        }
+
+        // Step 2: create an ArrayList where each entry is the head of a linked list node.
+        ArrayList<Integer> buckets = new ArrayList<Integer>(arr.length*2);
+
+        for(int j = 0; j < magnitude; j++){
+            for(int k = 0; k < arr.length; k++){
+                int digit = arr[k];
+
+                buckets.set(digit + 9, arr[k]);
+            }
+
+            // Step 3: iterate through the buckets array and "empty" each bucket linked list into the original array
+            int index = 0;
+            for(int bucket: buckets){
+                while(buckets.isEmpty() == false){
+                    arr[index] = bucket;
+                    buckets.set(index,null);
+                    index ++;
+                }
+            }
+        }
+
+
+
+
+
+
     }
 }
