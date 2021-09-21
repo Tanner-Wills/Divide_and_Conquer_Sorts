@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -113,47 +112,60 @@ public class Sorting {
      * @param arr The array to be sorted.
      */
     public static void lsdRadixSort(int[] arr) {
-        // each loop will sort the array by its least significant digit. then index one lsd.
-        // Step 1: determine the greatest magnitude of integer in the array
-        int magnitude = 0;
-        for(int i = 0; i< arr.length; i++){
-            String element = Integer.toString(arr[i]);
-            if(element.length() > magnitude)
-                magnitude = element.length();
-        }
+        // Each loop will sort the array by its least significant digit. then index one lsd.
 
-        // Step 2: create an ArrayList where each entry is the head of a linked list node.
-        ArrayList<Integer> buckets = new ArrayList<Integer>(arr.length*2);
+        // Step 1: determine the greatest magnitude of integer in the array
+        int magnitude = mag(arr);
+        //System.out.println("mag = " + magnitude);
+        // Step 2: create an ArrayQueue where each entry is the head of a linked list node.
+        Queue<Integer>[] buckets = new Queue[19];
 
         for(int j = 0; j < magnitude; j++){
             for(int k = 0; k < arr.length; k++){
                 int digit = arr[k];
-                int lsd = lsdIndex(digit, j);
+                int digitIndex = lsdIndex(digit, j);
 
+                if(buckets[digitIndex+9] == null)
+                    buckets[digitIndex+9] = new LinkedList<Integer>();
 
-
-                buckets.set(digit + 9, arr[k]);
+                buckets[digitIndex + 9].add(arr[k]);
             }
 
             // Step 3: iterate through the buckets array and "empty" each bucket linked list into the original array
             int index = 0;
-            for(int bucket: buckets){
-                while(buckets.isEmpty() == false){
-                    arr[index] = bucket;
-                    buckets.set(index,null);
+            for(Queue<Integer> bucket: buckets){
+                while(bucket != null && !bucket.isEmpty()){
+                    arr[index] = bucket.remove();
                     index ++;
                 }
             }
         }
     }
+
+    private static int mag(int[] arr){
+        int magnitude = 1;
+
+        for(int i = 0; i < arr.length; i++){
+            int loops = 1;
+            int current = arr[i];
+            while(current > 0) {
+                current = current / 10;
+                loops++;
+            }
+            if(loops > magnitude)
+                magnitude = loops;
+        }
+        return magnitude;
+    }
+
+
     private static int lsdIndex(int num, int index){
         // Helper method to pull out the lsd of the iteration loop for Radix sort
-        String lsdString = Integer.toString(num);
-        int lsdNum;
-        if(lsdString.length() >= (1+index))
-            lsdNum = Integer.parseInt(lsdString,lsdString.length()-(1+index));
-        else
-            lsdNum = 0;
-        return lsdNum;
+        for(int i = 0; i < index; i++)
+            num /= 10;
+
+        num %= 10;
+        return num;
     }
+
 }
