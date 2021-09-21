@@ -21,7 +21,7 @@ public class Sorting {
     public static <T> void mergeSort(T[] arr, Comparator<T> comparator) {
 
         // Step 1: Partition array into halves
-        if (arr.length == 1)
+        if (arr.length <= 1)
             return;
         else {
             int length = arr.length;
