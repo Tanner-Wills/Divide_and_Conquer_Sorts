@@ -87,6 +87,7 @@ public class Sorting {
         Queue<Integer>[] buckets = new Queue[19];
 
         for(int j = 0; j < magnitude; j++){
+
             for(int k = 0; k < arr.length; k++){
                 int digitIndex = lsdIndex(arr[k], j);
 
@@ -114,9 +115,9 @@ public class Sorting {
         int magnitude = 1;
 
         for(int i = 0; i < arr.length; i++){
-            int loops = 1;
+            int loops = 0;
             int current = arr[i];
-            while(current > 0) {
+            while(current != 0) {
                 current = current / 10;
                 loops++;
             }

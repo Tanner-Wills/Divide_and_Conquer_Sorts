@@ -21,7 +21,7 @@ public class TestSort {
         //Integer[] testArray = {5,6,7,8,1,2,3,4};
         //int[] testArray = {4, 3, 1, 5, 2, 6, 7};
 
-        int[] testArray = {432, 12, 65, 1, 7411, 55, 854, 9};
+        int[] testArray = {7,9,-999,8,-1000};
 
         Sorting.lsdRadixSort(testArray);
         System.out.println(Arrays.toString(testArray));
